@@ -3,8 +3,7 @@
 #include <stdlib.h>
 
 size_t read_file( char* filename, char **buffer){
-	FILE* file; 
-	fopen_s(&file, filename, "rb"); 
+	FILE* file = fopen(filename, "rb"); 
 	if(file == NULL){
 		printf("There was an error opening %s.  Please verify %s is a valid file.", filename, filename);
 		exit(1);
@@ -21,8 +20,7 @@ size_t read_file( char* filename, char **buffer){
 }
 
 size_t write_file( char* filename, char* buffer, size_t size){
-	FILE* file; 
-	fopen_s(&file, filename, "wb");
+	FILE* file = fopen(filename, "wb");
 	if(file == NULL){
 		printf("There was an error writing to %s.", filename);
 		exit(1);
