@@ -5,12 +5,20 @@
 #include <string.h> 
 
 int main(int argc, char** argv){
+	if(argc < 3){
+		puts("You must provide input and output wav files.");
+		exit(1);
+	}
 	char* buffer;
 	size_t file_size = read_file(argv[1], &buffer);
 	file_size = write_file(argv[1], buffer, file_size);
 	wav_file* wav = parse(buffer);
-	if (strcmp(wav->wave, "WAVE") != 0){
-		exit(24);
+	char* expectedWav = "WAVE";
+	for(int i = 0; i < 4; i++){
+		if(wav->wave[i] != expectedWav[i]){
+			printf("%s is not a valid wav file.", argv[1]);
+			exit(1);
+		}
 	}
 	printf("\nFile: %s", argv[1]);
 	printf("\n====================");
@@ -29,4 +37,6 @@ int main(int argc, char** argv){
 		}
 	}
 	file_size = write_file(argv[2], buffer, file_size);
+	free(buffer);
+	return 0;
 }

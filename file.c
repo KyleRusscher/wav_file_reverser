@@ -5,11 +5,16 @@
 size_t read_file( char* filename, char **buffer){
 	FILE* file; 
 	fopen_s(&file, filename, "rb"); 
+	if(file == NULL){
+		printf("There was an error opening %s.  Please verify %s is a valid file.", filename, filename);
+		exit(1);
+	}
 	size_t size; 
 	fseek(file, 0, SEEK_END); 
     size = ftell(file);
-	*buffer = malloc(size);
 	fseek(file, 0, SEEK_SET);
+
+	*buffer = malloc(size);
   	fread(*buffer, sizeof(**buffer), size, file);
   	fclose(file);
 	return size;
@@ -18,6 +23,10 @@ size_t read_file( char* filename, char **buffer){
 size_t write_file( char* filename, char* buffer, size_t size){
 	FILE* file; 
 	fopen_s(&file, filename, "wb");
+	if(file == NULL){
+		printf("There was an error writing to %s.", filename);
+		exit(1);
+	}
 	fwrite(buffer, size * sizeof(char), 1, file);
 	fclose(file);
 	return size;
