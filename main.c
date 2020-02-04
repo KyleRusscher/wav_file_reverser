@@ -28,11 +28,11 @@ int main(int argc, char** argv){
 	printf("\n%d byte rate, 2 alignment, %d bits per sample.", wav->bitsPerSample, wav->bitsPerSampleShort);
 	printf("\nData is \"%s\" and data size is %d\n", wav->beginData, wav->sizeOfData);
 
-	for(int i = 44; i < wav->sizeOfData / 2; i+=wav->bitsPerSampleShort){
+	for(int i = 44; i < (wav->sizeOfData / 2) - wav->bitsPerSampleShort; i+=wav->bitsPerSampleShort){
 		for(int j = 0; j < wav->bitsPerSampleShort; j++){
-			char temp = wav->actualData[i+j];
-			wav->actualData[i+j] = wav->actualData[wav->sizeOfData - wav->bitsPerSampleShort - i + j];
-			wav->actualData[wav->sizeOfData - wav->bitsPerSampleShort - i + j] = temp;
+			char temp = buffer[i+j];
+			buffer[i+j] = buffer[wav->sizeOfData - wav->bitsPerSampleShort - i + j];
+			buffer[wav->sizeOfData - wav->bitsPerSampleShort - i + j] = temp;
 		}
 	}
 	file_size = write_file(argv[2], buffer, file_size);
