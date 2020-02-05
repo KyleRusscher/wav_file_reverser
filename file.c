@@ -10,13 +10,13 @@ size_t read_file( char* filename, char **buffer){
 	}
 	size_t size; 
 	fseek(file, 0, SEEK_END); 
-    size = ftell(file);
+    	size = ftell(file);
 	fseek(file, 0, SEEK_SET);
 	
 	*buffer = malloc(size);
 	if (*buffer == NULL) {
-    	printf("failed to allocate memory.\n");
-    	exit(1);
+    		printf("failed to allocate memory.\n");
+    		exit(1);
 	}
   	fread(*buffer, sizeof(**buffer), size, file);
   	fclose(file);
