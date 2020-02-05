@@ -10,7 +10,6 @@ int main(int argc, char** argv){
 	}
 	char* buffer;
 	size_t file_size = read_file(argv[1], &buffer);
-	file_size = write_file(argv[1], buffer, file_size);
 	wav_file* wav = parse(buffer);
 	char* expectedWav = "WAVE";
 	for(int i = 0; i < 4; i++){
